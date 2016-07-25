@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <div id="form" style="width: 75%; margin: 0 auto; ">
+      <form id="loginForm"> 
+        Login :<br> 
+        <input type="text" name="login" style="margin-bottom: 10px;"><br> 
+        Password : <br> 
+        <input type="password" name="password" style="margin-bottom: 10px;"><br>
+        <input type="button" value="Submit" style="margin-bottom: 20px;" 
+                onClick="
+                document.getElementById('Message').style.backgroundColor = 'orange';
+                document.getElementById('Message').innerHTML = 'Wait...';
+                google.script.run.withSuccessHandler(LogSuccess).submitForm(this.form);
+                google.script.run.withFailureHandler(LogFailure).submitForm(this.form);
+                document.getElementById('loginForm').reset();">
+      </form>
+    </div>
+    <div id="feedback" style="width: 75%; margin: 0 auto; text-align:center;" >
+      <div id="Message"></div>
+    </div>
+   <script>
+   
+     // Sucess Callback 
+     function LogSuccess(){ 
+       document.getElementById('Message').style.backgroundColor = '#9EE08B';
+       document.getElementById('Message').innerHTML = "Authenticate with success !";
+       setTimeout(function(){ google.script.host.close(); }, 2000);
+     };
+     
+     // Failure Callback 
+     function LogFailure(){ 
+       document.getElementById('Message').style.backgroundColor = '#ED6868';
+       document.getElementById('Message').innerHTML = "Invalid login or password";
+     };
+   </script>
+  </body>
+</html>
+
+
